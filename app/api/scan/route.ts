@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
   const payload = await req.json();
 
-  const res = await fetch(process.env.NEXT_PUBLIC_ENGINE_URL!, {
+  const res = await fetch(process.env.NEXT_ENGINE_URL!, {
     method: "POST",
     headers: {
       "content-type": "application/json",
