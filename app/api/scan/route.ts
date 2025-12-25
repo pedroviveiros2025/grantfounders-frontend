@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const body = await req.json();
+  const payload = await req.json();
 
   const res = await fetch(process.env.NEXT_PUBLIC_ENGINE_URL!, {
     method: "POST",
@@ -9,9 +9,9 @@ export async function POST(req: NextRequest) {
       "content-type": "application/json",
       "x-engine-secret": process.env.ENGINE_SECRET!
     },
-    body: JSON.stringify(body)
+    body: JSON.stringify(payload)
   });
 
-  const data = await res.json();
-  return NextResponse.json(data);
+  const json = await res.json();
+  return NextResponse.json(json);
 }
