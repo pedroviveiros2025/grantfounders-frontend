@@ -1,22 +1,17 @@
-import { NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: Request) {
-  const body = await req.json()
+export async function POST(req: NextRequest) {
+  const payload = await req.json();
 
-  const res = await fetch(process.env.ENGINE_URL!, {
+  const res = await fetch(process.env.NEXT_ENGINE_URL!, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
-      "x-engine-secret": process.env.ENGINE_SECRET!
+      "content-type": "application/json",
+      "x-engine-secret": process.env.ENGINE_SECRET!   // ← segredo REAL
     },
-    body: JSON.stringify({
-      org_id: "gf_zero",
-      project_id: body.project,
-      agency: body.agency,
-      inputs: body
-    })
-  })
+    body: JSON.stringify(payload)
+  });
 
-  const data = await res.json()
-  return NextResponse.json(data)
+  const json = await res.json();
+  return NextResponse.json(json);
 }
