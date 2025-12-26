@@ -7,11 +7,15 @@ export async function POST(req: NextRequest) {
     method: "POST",
     headers: {
       "content-type": "application/json",
-      "x-engine-secret": process.env.ENGINE_SECRET!   // ← segredo REAL
+      "x-engine-secret": process.env.ENGINE_SECRET!
     },
     body: JSON.stringify(payload)
   });
 
-  const json = await res.json();
-  return NextResponse.json(json);
+  const text = await res.text();
+
+  return new NextResponse(text, {
+    status: res.status,
+    headers: { "content-type": "application/json" }
+  });
 }
